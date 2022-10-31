@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  ModalController,
+  NavController,
+} from '@ionic/angular';
 import { CreateBookingComponent } from '../create-booking/create-booking.component';
 import { PlacesService } from '../../places.service';
 import { Place } from '../../places.model';
@@ -17,7 +21,8 @@ export class PlaceDetailsPage implements OnInit {
     private navCtrl: NavController,
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
-    private placesService: PlacesService
+    private placesService: PlacesService,
+    private actionSheetCtrl: ActionSheetController
   ) {}
 
   ngOnInit() {
@@ -32,6 +37,29 @@ export class PlaceDetailsPage implements OnInit {
 
   onBook() {
     // this.navCtrl.navigateBack('places/discover');
+    this.actionSheetCtrl
+      .create({
+        header: 'Choose an action',
+        buttons: [
+          {
+            text: 'Select Date',
+            handler: () => this.openBookingModal('select'),
+          },
+          {
+            text: 'Random Date',
+            handler: () => this.openBookingModal('random'),
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+        ],
+      })
+      .then((actionSheet) => actionSheet.present());
+  }
+
+  openBookingModal(mode: 'select' | 'random') {
+    console.log(mode);
     this.modalCtrl
       .create({
         component: CreateBookingComponent,

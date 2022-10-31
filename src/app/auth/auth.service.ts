@@ -15,7 +15,6 @@ export class AuthService {
 
   login() {
     this.userAuthenticated = true;
-    this.router.navigateByUrl('/places/discover');
   }
   logOut() {
     this.userAuthenticated = false;
