@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Place } from '../../places.model';
 
@@ -9,6 +10,7 @@ import { Place } from '../../places.model';
 })
 export class CreateBookingComponent implements OnInit {
   @Input() selectedPlace: Place;
+  @Input() selectedMode: 'select' | 'random';
 
   constructor(private modalCtrl: ModalController) {}
 
@@ -18,7 +20,10 @@ export class CreateBookingComponent implements OnInit {
     this.modalCtrl.dismiss(null, 'cancel');
   }
 
-  onBookPlace() {
-    this.modalCtrl.dismiss({ message: 'dummy message' }, 'confirm');
+  onBookPlace(createBookingForm: NgForm) {
+    this.modalCtrl.dismiss(
+      { message: 'dummy message', formValue: createBookingForm.value },
+      'confirm'
+    );
   }
 }

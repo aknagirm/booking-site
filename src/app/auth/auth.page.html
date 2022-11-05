@@ -1,9 +1,69 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Authenticate</ion-title>
+    <ion-title>{{authMode==='login'? 'Login':'Signup'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button color="primary" (click)="onLogin()"> Login </ion-button>
+  <ion-grid class="ion-margin-top">
+    <form #authForm="ngForm" (ngSubmit)="onLogin(authForm)">
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Email Id</ion-label>
+            <ion-input
+              type="email"
+              ngModel
+              name="email"
+              required
+              #authEmail="ngModel"
+            ></ion-input>
+          </ion-item>
+          <ion-item
+            *ngIf="authEmail.touched && !authEmail.valid"
+            line="none"
+            class="error-message"
+            ><small color="danger"
+              >Please provide correct email</small
+            ></ion-item
+          >
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input
+              type="password"
+              ngModel
+              name="password"
+              required
+              minlength="6"
+              #authPassword="ngModel"
+            ></ion-input>
+          </ion-item>
+          <ion-item
+            *ngIf="authPassword.touched && !authPassword.valid"
+            line="none"
+            class="error-message"
+            ><small color="danger">Password cannot be empty</small></ion-item
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-button
+            type="button"
+            fill="clear"
+            expand="block"
+            (click)="switchLoginMethod()"
+            >SWITCH TO {{authMode==='login'? 'Signup':'Login'}}</ion-button
+          >
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [disabled]="!authForm.valid"
+            >{{authMode==='login'? 'Login':'Signup'}}</ion-button
+          >
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
 </ion-content>
