@@ -1,13 +1,24 @@
 export interface Place {
-  id: string;
+  placeId?: string;
   title: string;
   description: string;
   imageUrl: any;
   price: number;
+  availableFrom: string;
+  availableTo: string;
+  userId: string;
+}
+
+export interface Booking extends Place {
+  bookingId: string;
+  name: string;
+  guestNumber: string;
+  from: string;
+  to: string;
 }
 
 export const placesList: Place[] = [
-  {
+  /* {
     id: 'p1',
     title: 'Green View Homestay',
     description:
@@ -28,5 +39,5 @@ export const placesList: Place[] = [
     description: 'Modern housing at the heart of the city',
     imageUrl: 'p3.jpg',
     price: 1800,
-  },
+  }, */
 ];

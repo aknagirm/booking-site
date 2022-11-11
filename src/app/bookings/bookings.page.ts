@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Booking } from './booking.model';
-import { BookingsService } from './bookings.service';
+import { AuthService } from '../auth/auth.service';
+import { Booking } from '../places/places.model';
+import { PlacesService } from '../places/places.service';
+import {} from './booking.model';
 
 @Component({
   selector: 'app-bookings',
@@ -10,13 +12,31 @@ import { BookingsService } from './bookings.service';
 export class BookingsPage implements OnInit {
   loadedBookings: Booking[];
 
-  constructor(private bookingsService: BookingsService) {}
+  constructor(
+    private placesService: PlacesService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    this.loadedBookings = this.bookingsService.allBookings;
+    //this.loadedBookings = this.bookingsService.allBookings;
   }
 
-  onCancelBooking(bplaceId: string) {
-    //cancel booking
+  ionViewWillEnter() {
+    this.getAllBookings();
+  }
+
+  getAllBookings() {
+    this.placesService.getAllBookings().subscribe((bookingList: Booking[]) => {
+      this.loadedBookings = bookingList.filter(
+        (booking) => booking.userId === this.authService.userId
+      );
+      console.log(bookingList, this.loadedBookings, this.authService.userId);
+    });
+  }
+
+  onCancelBooking(bookingId: string) {
+    this.placesService
+      .cancelBooking(bookingId)
+      .subscribe(() => this.getAllBookings());
   }
 }

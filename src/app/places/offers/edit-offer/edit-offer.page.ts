@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Place } from '../../places.model';
 import { PlacesService } from '../../places.service';
 
@@ -16,7 +18,8 @@ export class EditOfferPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private placesService: PlacesService
+    private placesService: PlacesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -36,6 +39,15 @@ export class EditOfferPage implements OnInit {
         this.selectedPlace.description,
         Validators.compose([Validators.required, Validators.maxLength(180)]),
       ],
+    });
+  }
+
+  editPlace() {
+    this.selectedPlace.description = this.offerForm.get('description').value;
+    this.selectedPlace.title = this.offerForm.get('title').value;
+    delete this.selectedPlace.placeId;
+    this.placesService.editOffer(this.selectedPlace).subscribe(() => {
+      this.router.navigateByUrl('/places/offers');
     });
   }
 }

@@ -18,7 +18,7 @@
       <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
         <ion-list>
           <ion-item-sliding *ngFor="let place of placesList" #slideDrawer>
-            <ion-item [routerLink]="['offer-bookings',place.id]" detail>
+            <ion-item [routerLink]="['offer-bookings',place.placeId]" detail>
               <ion-thumbnail slot="start">
                 <ion-img
                   src="assets\resorts-images\{{place.imageUrl}}"
@@ -32,7 +32,7 @@
             <ion-item-options>
               <ion-item-option
                 color="secondary"
-                [routerLink]="['edit-offer',place.id]"
+                [routerLink]="['edit-offer',place.placeId]"
                 (click)="slideDrawer.close()"
                 ><ion-icon name="create" slot="icon-only"></ion-icon>
               </ion-item-option>
