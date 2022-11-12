@@ -10,6 +10,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-button color="primary" (click)="onBook()"> Book </ion-button>
+<ion-content class="ion-text-center">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title> {{place.title}} </ion-card-title>
+      <ion-card-subtitle>
+        {{place.price | currency:'INR':'symbol'}}/night
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-img src="assets\resorts-images\{{place.imageUrl}}"></ion-img>
+      <p>{{place.description}}</p>
+    </ion-card-content>
+  </ion-card>
+  <ion-button color="primary" (click)="onBook()"> Book this place</ion-button>
 </ion-content>
